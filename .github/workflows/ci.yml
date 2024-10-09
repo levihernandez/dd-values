@@ -1,0 +1,25 @@
+name: Build and Test Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build the Docker image
+        run: |
+          docker build -t yourusername/yourimage:latest .
+
+      - name: Run tests inside the container
+        run: |
+          docker run --rm yourusername/yourimage:latest pytest tests/
